@@ -6,3 +6,16 @@
 // Resources:
 // https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 // https://pmav.eu/stuff/javascript-game-of-life-v3.1.1/
+
+
+
+// Split into subtasks -
+// 1. make grid
+// 2. iterate
+// 3. implement rules
+
+// Programming tasks -
+// beinning state
+// pass providers
+// write tests
+// write actual code
