@@ -17,26 +17,45 @@ class GameOfLife {
   }
 
   _iterate() {
-    this.grid.forEach((row, columnIndex) => {
-      row.forEach((element, rowIndex) => {
-        const neighbours = this._countNeighbours(columnIndex, rowIndex);
-        neighbours && console.log(neighbours, columnIndex, rowIndex);
+    const nextGrid = [];
+    this.grid.forEach((row, rowIndex) => {
+      const rowArray = [];
+      row.forEach((cell, colIndex) => {
+        const neighbours = this._countNeighbours(rowIndex, colIndex);
+        rowArray.push(false);
+        if (cell) {
+          switch (true) {
+            case neighbours < 2:
+              this.provider.onIsolation(rowIndex, colIndex);
+              break;
+            case neighbours === 2 || neighbours === 3:
+              this.provider.onLive(rowIndex, colIndex);
+              break;
+            case neighbours > 3:
+              this.provider.onOverPopulation(rowIndex, colIndex);
+              break;
+          }
+        } else if (neighbours === 3) {
+          this.provider.onReproduction(rowIndex, colIndex);
+        }
       });
+      nextGrid.push(rowArray);
     });
 
     // RULE 1
     // RULE 2
     // RULE 3
     // RULE 4
-    this.provider.onIteration(this.grid);
+
+    this.provider.onIteration(nextGrid);
   }
 
   _countNeighbours(column, row) {
     let count = 0;
 
-    POSITIONS.forEach(([x, y]) => {
-      const posX = row + x;
-      const posY = column + y;
+    POSITIONS.forEach(([y, x]) => {
+      const posY = row + y;
+      const posX = column + x;
       if (this._outOfBounds(posX, posY)) return;
 
       count += Number(this.grid[posX][posY]);
@@ -45,8 +64,8 @@ class GameOfLife {
     return count;
   }
 
-  _outOfBounds(posX, posY) {
-    return posX < 0 || posY < 0 || posX >= this.size || posY >= this.size;
+  _outOfBounds(posY, posX) {
+    return posY < 0 || posX < 0 || posY >= this.size || posX >= this.size;
   }
 }
 
