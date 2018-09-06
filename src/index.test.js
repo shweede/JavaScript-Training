@@ -79,9 +79,10 @@ describe("my GameOfLife code", () => {
     const life = new GameOfLife(gridLive, provider);
     life.start();
 
-    expect(onLive).toBeCalledWith(3, 3);
-    expect(onLive).toBeCalledWith(2, 3);
-    expect(onLive).toBeCalledWith(3, 4);
+    expect(onLive).toHaveBeenCalledTimes(3);
+    expect(onLive).toHaveBeenNthCalledWith(1, 2, 3);
+    expect(onLive).toHaveBeenNthCalledWith(2, 3, 3);
+    expect(onLive).toHaveBeenNthCalledWith(3, 3, 4);
   });
 
   const gridOverPopulation = [
