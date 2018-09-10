@@ -1,9 +1,9 @@
 // prettier-ignore
 const POSITIONS = [
-  [-1,-1],[-1, 0],[-1, 1],
-  [ 0,-1],        [ 0, 1],
-  [ 1,-1],[ 1, 0],[ 1, 1]
-]
+  [-1, -1],[-1, 0],[-1, 1],
+  [ 0, -1],        [ 0, 1],
+  [ 1, -1],[ 1, 0],[ 1, 1]
+];
 
 class GameOfLife {
   constructor(initialGrid, provider) {
@@ -14,59 +14,71 @@ class GameOfLife {
 
   start() {
     this._iterate();
+    setInterval(() => {
+      this._iterate();
+    }, 1000);
   }
 
   _iterate() {
-    const nextGrid = [];
-    this.grid.forEach((row, rowIndex) => {
-      const rowReducer = (rowArray, cell, colIndex) => {
-        const neighbours = this._countNeighbours(rowIndex, colIndex);
-        if (cell) {
-          switch (true) {
-            case neighbours < 2:
-              this.provider.onIsolation(rowIndex, colIndex);
-              rowArray.push(false);
-              break;
-            case neighbours === 2 || neighbours === 3:
-              this.provider.onLive(rowIndex, colIndex);
-              rowArray.push(true);
-              break;
-            case neighbours > 3:
-              this.provider.onOverPopulation(rowIndex, colIndex);
-              rowArray.push(false);
-              break;
-          }
-        } else if (neighbours === 3) {
-          this.provider.onReproduction(rowIndex, colIndex);
-          rowArray.push(true);
-        } else {
-          rowArray.push(false);
-        }
-        return rowArray;
-      };
-      const reducedRow = row.reduce(rowReducer, []);
-      nextGrid.push(reducedRow);
-    });
-
-    this.provider.onIteration(nextGrid);
+    this.grid = this._generateNewGrid();
+    this.provider.onIteration(this.grid);
   }
 
-  _countNeighbours(column, row) {
-    const reducer = (accumulator, [y, x]) => {
+  _generateNewGrid() {
+    return this.grid.map((row, rowIndex) => {
+      return row.map((alive, columnIndex) => {
+        const neighbours = this._countNeighbours(rowIndex, columnIndex);
+
+        const { action, value } = this._getActionAndValue(alive, neighbours);
+        action && this.provider[action](rowIndex, columnIndex);
+        return value;
+      });
+    });
+  }
+
+  _getActionAndValue(alive, neighbours) {
+    if (alive) {
+      if (this._isIsolation(neighbours)) {
+        return { action: "onIsolation", value: false };
+      } else if (this._isLive(neighbours)) {
+        return { action: "onLive", value: true };
+      } else if (this._isOverPopulation(neighbours)) {
+        return { action: "onOverPopulation", value: false };
+      }
+    } else if (this._isReproduction(neighbours)) {
+      return { action: "onReproduction", value: true };
+    } else {
+      return { value: false };
+    }
+  }
+
+  _isIsolation(neighbours) {
+    return neighbours < 2;
+  }
+
+  _isLive(neighbours) {
+    return [2, 3].includes(neighbours);
+  }
+
+  _isOverPopulation(neighbours) {
+    return neighbours > 3;
+  }
+
+  _isReproduction(neighbours) {
+    return neighbours === 3;
+  }
+
+  _countNeighbours(row, column) {
+    return POSITIONS.reduce((sum, [x, y]) => {
       const posY = row + y;
       const posX = column + x;
-      if (this._outOfBounds(posX, posY)) {
-        return accumulator;
-      } else {
-        return accumulator + Number(this.grid[posX][posY]);
-      }
-    };
-
-    return POSITIONS.reduce(reducer, 0);
+      if (this._outOfBounds(posX, posY)) return sum;
+      return sum + Number(this.grid[posY][posX]);
+    }, 0);
   }
 
-  _outOfBounds(posY, posX) {
-    return posY < 0 || posX < 0 || posY >= this.size || posX >= this.size;
+  _outOfBounds(posX, posY) {
+    return posX < 0 || posY < 0 || posX >= this.size || posY >= this.size;
   }
 }
 
