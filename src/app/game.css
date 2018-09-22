@@ -3,7 +3,7 @@ form input {
   display: block;
 }
 
-table {
+/* table {
   border-collapse: collapse;
 }
 th,
@@ -11,4 +11,22 @@ td {
   padding: 8px;
   min-width: 40px;
   text-align: center;
+} */
+
+.gridtable table {
+  table-layout: fixed;
+}
+
+td {
+  border: 0px solid;
+  width: 10px;
+  height: 10px;
+}
+
+.alive {
+  background: #bada55;
+}
+
+.dead {
+  background: #ffa500;
 }
