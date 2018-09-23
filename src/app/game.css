@@ -3,30 +3,27 @@ form input {
   display: block;
 }
 
-/* table {
+table.changelogtable {
   border-collapse: collapse;
 }
 th,
-td {
+td.changelogtable {
   padding: 8px;
   min-width: 40px;
   text-align: center;
-} */
-
-.gridtable table {
-  table-layout: fixed;
 }
 
-td {
+table.gridtable {
+  table-layout: fixed;
+}
+td.gridtable {
   border: 0px solid;
   width: 10px;
   height: 10px;
 }
-
-.alive {
+td.alive {
   background: #bada55;
 }
-
-.dead {
+td.dead {
   background: #ffa500;
 }

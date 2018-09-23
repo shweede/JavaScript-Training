@@ -13,10 +13,11 @@ export default class DOMProvider {
       const trtag = document.createElement("tr");
       row.forEach(cell => {
         const tdtag = document.createElement("td");
+        tdtag.classList.add("gridtable");
         if (cell) {
-          tdtag.className = "alive";
+          tdtag.classList.add("alive");
         } else {
-          tdtag.className = "dead";
+          tdtag.classList.add("dead");
         }
         trtag.appendChild(tdtag);
       });
