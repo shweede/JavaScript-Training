@@ -1,5 +1,3 @@
-import fixtures from "../fixtures";
-
 export default class DOMProvider {
   constructor() {}
 
@@ -17,8 +15,14 @@ export default class DOMProvider {
   onLive = () => {};
   onOverPopulation = () => {};
   onReproduction = () => {};
-  grid = () => {
-    return fixtures.onIteration.given;
+  grid = (xSize, ySize) => {
+    return Array(ySize)
+      .fill(null)
+      .map(() =>
+        Array(xSize)
+          .fill(null)
+          .map(x => Math.random() >= 0.5)
+      );
   };
 
   _generateColorTable = grid => {
@@ -51,10 +55,13 @@ export default class DOMProvider {
 
     grid.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
-        if (grid[rowIndex][columnIndex]) {
-          gridElement.children[rowIndex].children[columnIndex].classList.add("alive");
+        let element = gridElement.children[rowIndex].children[columnIndex];
+        if (cell) {
+          element.classList.remove("dead");
+          element.classList.add("alive");
         } else {
-          gridElement.children[rowIndex].children[columnIndex].classList.add("dead");
+          element.classList.remove("alive");
+          element.classList.add("dead");
         }
       });
     });
