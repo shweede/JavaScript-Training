@@ -1,13 +1,31 @@
-import GameOfLife from "../app/GameOfLife";
 import fixtures from "../fixtures";
 
 export default class DOMProvider {
   constructor() {}
 
+  isNotFirstIteration = false;
+
   onIteration = grid => {
+    if (this.isNotFirstIteration) {
+      this._updateColorTable(grid);
+    } else {
+      this.isNotFirstIteration = true;
+      this._generateColorTable(grid);
+    }
+  };
+  onIsolation = () => {};
+  onLive = () => {};
+  onOverPopulation = () => {};
+  onReproduction = () => {};
+  grid = () => {
+    return fixtures.onIteration.given;
+  };
+
+  _generateColorTable = grid => {
     const tabletag = document.createElement("table");
     tabletag.className = "gridtable";
     const tbodytag = document.createElement("tbody");
+    tbodytag.id = "colorgrid";
 
     grid.forEach(row => {
       const trtag = document.createElement("tr");
@@ -27,11 +45,18 @@ export default class DOMProvider {
     tabletag.appendChild(tbodytag);
     document.body.appendChild(tabletag);
   };
-  onIsolation = () => {};
-  onLive = () => {};
-  onOverPopulation = () => {};
-  onReproduction = () => {};
-  grid = () => {
-    return fixtures.onIteration.given;
+
+  _updateColorTable = grid => {
+    let gridElement = document.getElementById("colorgrid");
+
+    grid.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        if (grid[rowIndex][columnIndex]) {
+          gridElement.children[rowIndex].children[columnIndex].classList.add("alive");
+        } else {
+          gridElement.children[rowIndex].children[columnIndex].classList.add("dead");
+        }
+      });
+    });
   };
 }
