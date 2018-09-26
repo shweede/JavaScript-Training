@@ -21,7 +21,7 @@ export default class DOMProvider {
       .map(() =>
         Array(xSize)
           .fill(null)
-          .map(x => Math.random() >= 0.5)
+          .map(() => Math.random() >= 0.5)
       );
   };
 
