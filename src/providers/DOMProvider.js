@@ -1,7 +1,15 @@
+const changelogIterCount = 10;
+
 export default class DOMProvider {
   constructor() {}
 
   isNotFirstIteration = false;
+  iterationNo = 0;
+
+  isolationCounter = 0;
+  liveCounter = 0;
+  overPopulationCounter = 0;
+  reproductionCounter = 0;
 
   onIteration = grid => {
     if (this.isNotFirstIteration) {
@@ -10,11 +18,27 @@ export default class DOMProvider {
       this.isNotFirstIteration = true;
       this._generateColorTable(grid);
     }
+    this.iterationNo++;
+    this._addChangelogtableEntry();
+    this._resetCounters();
   };
-  onIsolation = () => {};
-  onLive = () => {};
-  onOverPopulation = () => {};
-  onReproduction = () => {};
+
+  onIsolation = () => {
+    this.isolationCounter++;
+  };
+
+  onLive = () => {
+    this.liveCounter++;
+  };
+
+  onOverPopulation = () => {
+    this.overPopulationCounter++;
+  };
+
+  onReproduction = () => {
+    this.reproductionCounter++;
+  };
+
   grid = (xSize, ySize) => {
     return Array(ySize)
       .fill(null)
@@ -51,7 +75,7 @@ export default class DOMProvider {
   };
 
   _updateColorTable = grid => {
-    let gridElement = document.getElementById("colorgrid");
+    const gridElement = document.getElementById("colorgrid");
 
     grid.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -65,5 +89,47 @@ export default class DOMProvider {
         }
       });
     });
+  };
+
+  _addChangelogtableEntry = () => {
+    const gridElement = document.getElementById("changelog");
+    if (this.iterationNo > changelogIterCount) {
+      gridElement.removeChild(gridElement.children[changelogIterCount - 1]);
+    }
+    const trtag = this._generateChangelogRow();
+    gridElement.insertBefore(trtag, gridElement.children[0]);
+  };
+
+  _resetCounters = () => {
+    this.isolationCounter = 0;
+    this.liveCounter = 0;
+    this.overPopulationCounter = 0;
+    this.reproductionCounter = 0;
+  };
+
+  _generateChangelogRow = () => {
+    const trtag = document.createElement("tr");
+
+    const tdtagIter = document.createElement("td");
+    tdtagIter.textContent = this.iterationNo;
+    trtag.appendChild(tdtagIter);
+
+    const tdtagIsolation = document.createElement("td");
+    tdtagIsolation.textContent = this.isolationCounter;
+    trtag.appendChild(tdtagIsolation);
+
+    const tdtagLive = document.createElement("td");
+    tdtagLive.textContent = this.liveCounter;
+    trtag.appendChild(tdtagLive);
+
+    const tdtagOverPop = document.createElement("td");
+    tdtagOverPop.textContent = this.overPopulationCounter;
+    trtag.appendChild(tdtagOverPop);
+
+    const tdtagReproduct = document.createElement("td");
+    tdtagReproduct.textContent = this.reproductionCounter;
+    trtag.appendChild(tdtagReproduct);
+
+    return trtag;
   };
 }
