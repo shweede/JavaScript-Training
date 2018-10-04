@@ -13,9 +13,13 @@ export default class GameOfLife {
 
   start = () => {
     this._iterate();
-    setInterval(this._iterate, this.speed);
+    this.intervalId = setInterval(this._iterate, this.speed);
   };
-  pause = () => {};
+
+  pause = () => {
+    clearInterval(this.intervalId);
+  };
+
   restart = () => {};
 
   _iterate = () => {

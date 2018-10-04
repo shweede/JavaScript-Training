@@ -9,3 +9,5 @@ const game = new GameOfLife({
 });
 
 game.start();
+
+document.getElementById("pause").addEventListener("click", game.pause);
