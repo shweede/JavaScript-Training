@@ -10,4 +10,14 @@ const game = new GameOfLife({
 
 game.start();
 
-document.getElementById("pause").addEventListener("click", game.pause);
+const pauseGame = () => {
+  if (game.gameIsRunning) {
+    game.pause();
+    document.querySelector("#pause").textContent = "Continue";
+  } else {
+    game.continue();
+    document.querySelector("#pause").textContent = "Pause";
+  }
+};
+
+document.getElementById("pause").addEventListener("click", pauseGame);
