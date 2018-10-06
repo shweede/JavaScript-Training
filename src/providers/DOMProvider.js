@@ -63,7 +63,7 @@ export default class DOMProvider {
 
   _generateColorTable = grid => {
     const tabletag = document.createElement("table");
-    tabletag.setAttribute("className", "gridtable");
+    tabletag.setAttribute("class", "gridtable");
     const tbodytag = document.createElement("tbody");
     tbodytag.setAttribute("id", "colorgrid");
 
