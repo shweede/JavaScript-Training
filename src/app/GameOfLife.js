@@ -31,7 +31,12 @@ export default class GameOfLife {
     }
   };
 
-  restart = () => {};
+  restart = gameProperties => {
+    this._setConfig(gameProperties);
+
+    this.pause();
+    this.start();
+  };
 
   _iterate = () => {
     this.grid = this._generateNewGrid();

@@ -20,4 +20,15 @@ const pauseGame = () => {
   }
 };
 
+const restartGame = event => {
+  event.preventDefault();
+
+  let sizeX = parseInt(document.querySelector("#sizeX").value);
+  let sizeY = parseInt(document.querySelector("#sizeY").value);
+  let speed = parseInt(document.querySelector("#speed").value);
+
+  game.restart({ sizeX, sizeY, speed, provider: new DOMProvider() });
+};
+
 document.getElementById("pause").addEventListener("click", pauseGame);
+document.querySelector("form").addEventListener("submit", restartGame);

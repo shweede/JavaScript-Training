@@ -1,7 +1,19 @@
 const changelogIterCount = 10;
 
 export default class DOMProvider {
-  constructor() {}
+  constructor() {
+    const tabletag = document.querySelector(".gridtable");
+
+    if (tabletag) {
+      tabletag.parentNode.removeChild(tabletag);
+    }
+
+    const changelogtag = document.querySelector("#changelog tbody");
+    while (changelogtag.firstChild) {
+      const garbageChild = changelogtag.firstChild;
+      changelogtag.removeChild(garbageChild);
+    }
+  }
 
   isNotFirstIteration = false;
   iterationNo = 0;
@@ -92,7 +104,7 @@ export default class DOMProvider {
   };
 
   _addChangelogtableEntry = () => {
-    const gridElement = document.getElementById("changelog");
+    const gridElement = document.querySelector("#changelog tbody");
     if (this.iterationNo > changelogIterCount) {
       gridElement.removeChild(gridElement.children[changelogIterCount - 1]);
     }
