@@ -36,6 +36,8 @@ const restartGame = event => {
   let speed = parseInt(document.querySelector("#speed").value);
 
   game.restart({ sizeX, sizeY, speed, provider: new DOMProvider() });
+
+  document.querySelector("#pause").textContent = "Pause";
 };
 
 document.querySelector("#pause").addEventListener("click", pauseGame);
