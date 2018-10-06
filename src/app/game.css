@@ -7,6 +7,9 @@ table.changelogtable {
   border-collapse: collapse;
 }
 th,
+tr:nth-child(odd) {
+  background-color: #ebebeb;
+}
 td.changelogtable {
   padding: 8px;
   min-width: 40px;
