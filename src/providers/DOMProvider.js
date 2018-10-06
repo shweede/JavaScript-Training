@@ -1,4 +1,4 @@
-const changelogIterCount = 10;
+const DISPLAY_ITER_COUNT = 10;
 
 export default class DOMProvider {
   constructor() {
@@ -63,9 +63,9 @@ export default class DOMProvider {
 
   _generateColorTable = grid => {
     const tabletag = document.createElement("table");
-    tabletag.className = "gridtable";
+    tabletag.setAttribute("className", "gridtable");
     const tbodytag = document.createElement("tbody");
-    tbodytag.id = "colorgrid";
+    tbodytag.setAttribute("id", "colorgrid");
 
     grid.forEach(row => {
       const trtag = document.createElement("tr");
@@ -87,7 +87,7 @@ export default class DOMProvider {
   };
 
   _updateColorTable = grid => {
-    const gridElement = document.getElementById("colorgrid");
+    const gridElement = document.querySelector("#colorgrid");
 
     grid.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
@@ -105,8 +105,8 @@ export default class DOMProvider {
 
   _addChangelogtableEntry = () => {
     const gridElement = document.querySelector("#changelog tbody");
-    if (this.iterationNo > changelogIterCount) {
-      gridElement.removeChild(gridElement.children[changelogIterCount - 1]);
+    if (this.iterationNo > DISPLAY_ITER_COUNT) {
+      gridElement.removeChild(gridElement.children[DISPLAY_ITER_COUNT - 1]);
     }
     const trtag = this._generateChangelogRow();
     gridElement.insertBefore(trtag, gridElement.children[0]);

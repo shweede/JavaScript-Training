@@ -38,5 +38,5 @@ const restartGame = event => {
   game.restart({ sizeX, sizeY, speed, provider: new DOMProvider() });
 };
 
-document.getElementById("pause").addEventListener("click", pauseGame);
+document.querySelector("#pause").addEventListener("click", pauseGame);
 document.querySelector("form").addEventListener("submit", restartGame);
