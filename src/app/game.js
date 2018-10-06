@@ -1,11 +1,19 @@
 import GameOfLife from "./GameOfLife";
 import { DOMProvider } from "./../providers";
 
+const DEFAULT_SIZE_X = 100;
+const DEFAULT_SIZE_Y = 50;
+const DEFAULT_SPEED = 100;
+
+document.querySelector("#sizeX").setAttribute("value", DEFAULT_SIZE_X);
+document.querySelector("#sizeY").setAttribute("value", DEFAULT_SIZE_Y);
+document.querySelector("#speed").setAttribute("value", DEFAULT_SPEED);
+
 const game = new GameOfLife({
   provider: new DOMProvider(),
-  sizeX: 100,
-  sizeY: 50,
-  speed: 100
+  sizeX: DEFAULT_SIZE_X,
+  sizeY: DEFAULT_SIZE_Y,
+  speed: DEFAULT_SPEED
 });
 
 game.start();
