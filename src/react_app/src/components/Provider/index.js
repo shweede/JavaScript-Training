@@ -30,8 +30,8 @@ export default class Provider extends Component {
 
     return (
       <>
-        <Grid grid={grid} />
         <Changelog counter={counter} />
+        <Grid grid={grid} />
       </>
     );
   }
