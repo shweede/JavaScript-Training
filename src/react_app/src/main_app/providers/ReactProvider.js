@@ -3,13 +3,13 @@ const TABLE_ELEMENTS = ["iteration", "isolation", "live", "overPopulation", "rep
 
 export default class ReactProvider {
   constructor(reactRef) {
-    this.counter = this._resetCounter();
     this.reactRef = reactRef;
+    this.counter = this._resetCounter();
   }
 
   onIteration = grid => {
     this.reactRef.onIteration(grid, this.counter);
-    this.counter = this._resetCounter();
+    this.counter = { ...this._resetCounter(), iteration: ++this.counter.iteration };
   };
   onIsolation = () => {
     this.counter.isolation++;

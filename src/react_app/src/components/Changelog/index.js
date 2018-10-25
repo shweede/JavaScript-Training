@@ -14,10 +14,25 @@ const TableHeader = () => {
   );
 };
 
+const TableRow = ({ counter }) => {
+  return (
+    <tr>
+      <td>{counter.iteration}</td>
+      <td>{counter.isolation}</td>
+      <td>{counter.live}</td>
+      <td>{counter.overPopulation}</td>
+      <td>{counter.reproduction}</td>
+    </tr>
+  );
+};
+
 const Changelog = ({ counter }) => {
   return (
-    <table id="changelog" class="changelogtable">
+    <table id="changelog" className="changelogtable">
       <TableHeader />
+      <tbody>
+        <TableRow counter={counter} />
+      </tbody>
     </table>
   );
 };
