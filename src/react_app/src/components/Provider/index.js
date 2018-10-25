@@ -6,8 +6,10 @@ import GameOfLife from "./../../main_app/app/GameOfLife";
 import Changelog from "./../Changelog";
 import Grid from "./../Grid";
 
+const DISPLAY_ITER_COUNT = 10;
+
 export default class Provider extends Component {
-  state = { grid: [], counter: {} };
+  state = { grid: [], counters: [] };
 
   componentDidMount = () => {
     this.provider = new ReactProvider(this);
@@ -22,15 +24,19 @@ export default class Provider extends Component {
   };
 
   onIteration = (grid, counter) => {
-    this.setState({ grid, counter });
+    const counterArray = [counter, ...this.state.counters];
+    if (counterArray.length > DISPLAY_ITER_COUNT) {
+      counterArray.pop();
+    }
+    this.setState({ grid, counters: counterArray });
   };
 
   render() {
-    const { grid, counter } = this.state;
+    const { grid, counters } = this.state;
 
     return (
       <>
-        <Changelog counter={counter} />
+        <Changelog counters={counters} />
         <Grid grid={grid} />
       </>
     );

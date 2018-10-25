@@ -14,24 +14,24 @@ const TableHeader = () => {
   );
 };
 
-const TableRow = ({ counter }) => {
-  return (
-    <tr>
-      <td>{counter.iteration}</td>
-      <td>{counter.isolation}</td>
-      <td>{counter.live}</td>
-      <td>{counter.overPopulation}</td>
-      <td>{counter.reproduction}</td>
+const TableRows = ({ counters }) => {
+  return counters.map((element, index) => (
+    <tr key={index}>
+      <td>{element.iteration}</td>
+      <td>{element.isolation}</td>
+      <td>{element.live}</td>
+      <td>{element.overPopulation}</td>
+      <td>{element.reproduction}</td>
     </tr>
-  );
+  ));
 };
 
-const Changelog = ({ counter }) => {
+const Changelog = ({ counters }) => {
   return (
     <table id="changelog" className="changelogtable">
       <TableHeader />
       <tbody>
-        <TableRow counter={counter} />
+        <TableRows counters={counters} />
       </tbody>
     </table>
   );
