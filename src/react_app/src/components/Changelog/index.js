@@ -1,4 +1,5 @@
 import React from "react";
+import "../Grid/styles.css";
 
 const TableHeader = () => {
   return (
