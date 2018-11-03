@@ -6,10 +6,12 @@ import GameOfLife from "./../../main_app/app/GameOfLife";
 import Changelog from "./../Changelog";
 import Grid from "./../Grid";
 
+import Form from "./../Form";
+
 const DISPLAY_ITER_COUNT = 10;
 
 export default class Provider extends Component {
-  state = { grid: [], counters: [] };
+  state = { grid: [], counters: [], pauseCaption: "Pause" };
 
   componentDidMount = () => {
     this.provider = new ReactProvider(this);
@@ -36,9 +38,22 @@ export default class Provider extends Component {
 
     return (
       <>
+        <Form onPauseClick={this.onPauseClick} pauseCaption={this.state.pauseCaption} />
         <Changelog counters={counters} />
         <Grid grid={grid} />
       </>
     );
   }
+
+  onSubmitClick = () => {};
+
+  onPauseClick = () => {
+    if (this.game.gameIsRunning) {
+      this.game.pause();
+      this.setState({ pauseCaption: "Resume" });
+    } else {
+      this.game.continue();
+      this.setState({ pauseCaption: "Pause" });
+    }
+  };
 }
