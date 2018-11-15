@@ -1,21 +1,21 @@
 import React from "react";
 import "../Provider/index.js";
 
-const Form = ({ onPauseClick, pauseCaption }) => {
+const Form = ({ onPauseClick, onSubmitClick, onUserInputChange, pauseCaption, sizeX, sizeY, speed }) => {
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmitClick}>
         <div>
           <label htmlFor="sizeX">Size X</label>
-          <input type="number" name="sizeX" id="sizeX" />
+          <input type="number" name="sizeX" id="sizeX" value={sizeX} onChange={onUserInputChange} />
         </div>
         <div>
           <label htmlFor="sizeY">Size Y</label>
-          <input type="number" name="sizeY" id="sizeY" />
+          <input type="number" name="sizeY" id="sizeY" value={sizeY} onChange={onUserInputChange} />
         </div>
         <div>
           <label htmlFor="speed">Speed</label>
-          <input type="number" name="speed" id="speed" />
+          <input type="number" name="speed" id="speed" value={speed} onChange={onUserInputChange} />
         </div>
         <div>
           <button type="submit">Update</button>
