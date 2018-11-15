@@ -1,27 +1,28 @@
 import React from "react";
 import "../Provider/index.js";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const Form = ({ onPauseClick, onSubmitClick, onUserInputChange, pauseCaption, sizeX, sizeY, speed }) => {
   return (
     <div>
       <form onSubmit={onSubmitClick}>
         <div>
-          <label htmlFor="sizeX">Size X</label>
-          <input type="number" name="sizeX" id="sizeX" value={sizeX} onChange={onUserInputChange} />
+          <TextField label="Size X" type="number" name="sizeX" id="sizeX" value={sizeX} onChange={onUserInputChange} />
         </div>
         <div>
-          <label htmlFor="sizeY">Size Y</label>
-          <input type="number" name="sizeY" id="sizeY" value={sizeY} onChange={onUserInputChange} />
+          <TextField label="sizeY" type="number" name="sizeY" id="sizeY" value={sizeY} onChange={onUserInputChange} />
         </div>
         <div>
-          <label htmlFor="speed">Speed</label>
-          <input type="number" name="speed" id="speed" value={speed} onChange={onUserInputChange} />
+          <TextField label="speed" type="number" name="speed" id="speed" value={speed} onChange={onUserInputChange} />
         </div>
         <div>
-          <button type="submit">Update</button>
-          <button type="button" id="pause" onClick={onPauseClick}>
+          <Button variant="contained" color="primary" type="submit">
+            Update
+          </Button>
+          <Button variant="contained" color="secondary" type="button" id="pause" onClick={onPauseClick}>
             {pauseCaption}
-          </button>
+          </Button>
         </div>
       </form>
     </div>
